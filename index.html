@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Lesson Engine</title>
+<meta name="theme-color" content="#667eea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0f0c29" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="author" content="Ahmed Abdo">
+<meta name="copyright" content="© 2026 Ahmed Abdo. All rights reserved.">
+<meta property="og:type" content="website">
+<meta property="og:title" id="ogTitle" content="">
+<meta property="og:description" id="ogDescription" content="Interactive English Lesson· 英语互动课程">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" id="twitterTitle" content="">
+<meta name="twitter:description" content="Interactive English Lesson · 英语互动课程">
+<meta name="description" content="Interactive English Lesson · 英语互动课程">
+<link id="dynamicFavicon" rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+<link id="dynamicAppleIcon" rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="viewer.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"CreativeWork","name":"Interactive English Lesson · 英语互动课程","author":{"@type":"Person","name":"Ahmed Abdo"},"copyrightNotice":"© Ahmed Abdo","license":"All Rights Reserved"}</script>
+</head>
+<body>
+
+<!-- ===== SPLASH / LOADING ===== -->
+<div id="appShell">
+  <div id="splashScreen" class="splash-screen">
+    <div class="splash-content">
+      <div class="splash-icon" id="splashIcon">📚</div>
+      <div class="splash-title" id="splashTitle">AI Lesson Engine</div>
+      <div class="splash-subtitle">Loading...</div>
+      <div class="splash-loader"><div class="splash-loader-bar"></div></div>
+    </div>
+  </div>
+
+  <!-- ===== CREATE FORM ===== -->
+  <div id="createScreen" class="create-screen">
+    <div class="create-card">
+      <div class="create-icon">🧠</div>
+      <h1 class="create-title">AI Lesson Generator</h1>
+      <p class="create-desc">Enter a topic to generate an interactive English lesson</p>
+      <div class="create-form">
+        <div class="input-tabs">
+          <button class="input-tab active" data-tab="text" id="tabTextBtn">📝 Text</button>
+          <button class="input-tab" data-tab="image" id="tabImageBtn">📷 Image</button>
+        </div>
+        <div class="input-panel active" id="panelText">
+          <input type="text" id="topicInput" class="create-input" placeholder="e.g. Shopping for clothes, At the restaurant..." maxlength="200" autofocus>
+        </div>
+        <div class="input-panel" id="panelImage">
+          <div class="image-upload-area" id="imageUploadArea">
+            <input type="file" id="imageInput" accept="image/jpeg,image/png,image/webp" class="file-input-hidden">
+            <div class="upload-placeholder" id="uploadPlaceholder">
+              <div class="upload-icon">📷</div>
+              <div class="upload-text">Click or drag an image here</div>
+              <div class="upload-hint">JPG, PNG or WebP · Max 5MB</div>
+            </div>
+            <div class="upload-preview" id="uploadPreview" style="display:none">
+              <img id="previewImage" alt="Preview">
+              <button class="upload-remove" id="removeImageBtn">✕</button>
+            </div>
+          </div>
+        </div>
+        <select id="levelSelect" class="create-select">
+          <option value="beginner">Beginner</option>
+          <option value="intermediate">Intermediate</option>
+          <option value="advanced">Advanced</option>
+        </select>
+        <button id="generateBtn" class="create-btn">✨ Generate Lesson</button>
+      </div>
+      <div id="skeletonArea" class="skeleton-area" style="display:none">
+        <div class="skeleton skeleton-hero"></div>
+        <div class="skeleton skeleton-grid"></div>
+        <div class="skeleton skeleton-card"></div>
+      </div>
+      <div id="errorArea" class="error-area" style="display:none">
+        <div class="error-icon">⚠️</div>
+        <div class="error-message" id="errorMessage"></div>
+        <button class="error-retry" onclick="location.reload()">Try Again</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== LESSON VIEWER ===== -->
+  <div id="lessonView" style="display:none">
+    <header class="topbar" id="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-logo" id="brandIcon"></div>
+          <div class="brand-title" id="brandTitle"></div>
+        </div>
+
+        <div class="current-section-title" id="currentSectionTitle" style="display:none">🎬 Introduction</div>
+
+        <div id="mobileCenter" style="display:none;flex:1;justify-content:center;align-items:center;gap:5px;font-weight:700;color:var(--primary);font-size:15px">
+          <span id="tbIcon">🎬</span>
+          <span id="tbName">Introduction</span>
+        </div>
+
+        <div class="stepper-desktop" id="stepperDesktop"></div>
+
+        <div class="topbar-actions" id="topbarActions">
+          <div class="ds-group">
+            <button class="ds-btn" onclick="UI.Font.change('en',-2)">−</button>
+            <span class="ds-label">En</span>
+            <button class="ds-btn" onclick="UI.Font.change('en',2)">+</button>
+          </div>
+          <div class="ds-group">
+            <button class="ds-btn" onclick="UI.Font.change('zh',-2)">−</button>
+            <span class="ds-label">中</span>
+            <button class="ds-btn" onclick="UI.Font.change('zh',2)">+</button>
+          </div>
+          <button class="ds-btn" id="autoFocusToggleBtn" class="ds-btn af-btn active" onclick="AutoFocus.toggleEnabled()" aria-label="Auto Focus" title="Auto Focus · 自动专注">🎯</button>
+          <button class="ds-btn" id="themeToggleBtn" onclick="UI.Theme.toggle()">🌙</button>
+          <button class="ds-btn" id="transToggleBtn" onclick="UI.Translation.toggle()">🌐</button>
+          <button class="ds-btn tt-topbar-btn" id="teacherToolsBtn" onclick="TeacherTools.togglePanel()" aria-label="Teacher Tools" title="Teacher Tools">🎓</button>
+          <span class="answers-hidden-badge" id="answersHiddenBadge" title="Answers Hidden · 答案已隐藏">🙈</span>
+          <button class="settings-btn" id="openSettingsBtn">⚙️</button>
+        </div>
+      </div>
+      <div id="tbDots" style="display:none;justify-content:center;gap:7px;padding:3px 0 5px;width:100%"></div>
+    </header>
+
+    <div class="stepper-wrap" id="stepperWrap" role="navigation" aria-label="Lesson Stages · 课程阶段" style="display:none">
+      <div class="stepper-mobile" id="stepperMobile">
+        <div class="stepper-mobile-main">
+          <button class="step-arrow step-arrow-prev" id="mobilePrevBtn" onclick="Navigation.goTo(Navigation.currentIdx - 1)" aria-label="Previous Stage">←</button>
+          <div class="mobile-stage-info">
+            <span class="mobile-stage-icon" id="mobileStageIcon">🎬</span>
+            <span class="mobile-stage-name" id="mobileStageName">Introduction</span>
+          </div>
+          <button class="step-arrow step-arrow-next" id="mobileNextBtn" onclick="Navigation.goTo(Navigation.currentIdx + 1)" aria-label="Next Stage">→</button>
+        </div>
+        <div class="mobile-stage-dots" id="mobileDotsContainer"></div>
+      </div>
+    </div>
+
+    <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+    <main id="mainContent"></main>
+
+    <!-- ===== SETTINGS MODAL ===== -->
+    <div id="settingsModal" class="modal-overlay" onclick="if(event.target===this)UI.Settings.close()">
+      <div class="modal-card">
+        <div class="modal-header">
+          <div><div style="font-size:20px;font-weight:700">⚙️ Settings</div><div style="font-size:12px;color:#888">设置</div></div>
+          <button id="settingsCloseBtn">✕</button>
+        </div>
+        <div class="modal-body" id="settingsBody">
+          <div style="margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #f0f0f0">
+            <h3 style="font-size:14px;font-weight:600;color:#667eea;margin:0 0 12px">🎨 Display</h3>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 8px">
+              <div style="display:flex;align-items:center;gap:12px">
+                <span style="font-size:22px">🌙</span>
+                <div><div style="font-size:14px;font-weight:600">Dark Mode</div><div style="font-size:11px;color:#888">夜间模式</div></div>
+              </div>
+              <label class="toggle-switch"><input type="checkbox" id="settingsThemeToggle"><span class="toggle-slider"></span></label>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 8px">
+              <div style="display:flex;align-items:center;gap:12px">
+                <span style="font-size:22px">🎯</span>
+                <div><div style="font-size:14px;font-weight:600">Focus Mode</div><div style="font-size:11px;color:#888">专注模式 · Blurs distant sections</div></div>
+              </div>
+              <label class="toggle-switch"><input type="checkbox" id="settingsFocusToggle"><span class="toggle-slider"></span></label>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 8px">
+              <div style="display:flex;align-items:center;gap:12px">
+                <span style="font-size:22px">⏱️</span>
+                <div><div style="font-size:14px;font-weight:600">Auto Focus</div><div style="font-size:11px;color:#888">自动专注 · After 30s of inactivity</div></div>
+              </div>
+              <label class="toggle-switch"><input type="checkbox" id="settingsAutoFocusToggle" checked><span class="toggle-slider"></span></label>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 8px">
+              <div style="display:flex;align-items:center;gap:12px">
+                <span style="font-size:22px">🌍</span>
+                <div><div style="font-size:14px;font-weight:600">Chinese Translation</div><div style="font-size:11px;color:#888">中文翻译</div></div>
+              </div>
+              <label class="toggle-switch"><input type="checkbox" id="settingsTransToggle"><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+          <div style="margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #f0f0f0">
+            <h3 style="font-size:14px;font-weight:600;color:#667eea;margin:0 0 12px">🔤 English Font Size</h3>
+            <div style="display:flex;gap:12px;align-items:center;padding:8px;background:rgba(102,126,234,.05);border-radius:12px">
+              <button id="enFontDecrease" style="width:38px;height:38px;border-radius:50%;border:none;background:#fff;color:#667eea;font-size:20px;font-weight:700;cursor:pointer;box-shadow:0 2px 8px rgba(102,126,234,.15)">−</button>
+              <div class="en-preview" style="flex:1;text-align:center;font-weight:600;color:#1a1a2e;font-size:22px">ABC</div>
+              <button id="enFontIncrease" style="width:38px;height:38px;border-radius:50%;border:none;background:#fff;color:#667eea;font-size:20px;font-weight:700;cursor:pointer;box-shadow:0 2px 8px rgba(102,126,234,.15)">+</button>
+            </div>
+          </div>
+          <div>
+            <h3 style="font-size:14px;font-weight:600;color:#667eea;margin:0 0 12px">中 Chinese Font Size</h3>
+            <div style="display:flex;gap:12px;align-items:center;padding:8px;background:rgba(102,126,234,.05);border-radius:12px">
+              <button id="cnFontDecrease" style="width:38px;height:38px;border-radius:50%;border:none;background:#fff;color:#667eea;font-size:20px;font-weight:700;cursor:pointer;box-shadow:0 2px 8px rgba(102,126,234,.15)">−</button>
+              <div class="cn-preview" style="flex:1;text-align:center;font-weight:600;color:#1a1a2e;font-size:18px">汉字</div>
+              <button id="cnFontIncrease" style="width:38px;height:38px;border-radius:50%;border:none;background:#fff;color:#667eea;font-size:20px;font-weight:700;cursor:pointer;box-shadow:0 2px 8px rgba(102,126,234,.15)">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TEACHER TOOLS PANEL ===== -->
+<div id="teacherToolbar" class="teacher-toolbar" aria-label="Teacher Tools">
+  <div class="tt-panel" id="ttPanel">
+    <div class="tt-header">
+      <div class="tt-header-icon">🎓</div>
+      <div class="tt-header-text">
+        <span class="tt-title">Teacher Tools</span>
+        <span class="tt-zh"></span>
+      </div>
+      <button class="tt-close-btn" onclick="TeacherTools.togglePanel()" aria-label="Close">✕</button>
+    </div>
+    <div class="tt-quick-row">
+      <button class="tt-quick-btn" onclick="TeacherTools.togglePresenter()" data-tip="Presentation"><span class="tt-q-ic">🔍</span></button>
+      <button class="tt-quick-btn" id="ttHideBtn" onclick="TeacherTools.toggleAnswers()" data-tip="Hide"><span class="tt-q-ic" id="ttHideIcon">🙈</span></button>
+      <button class="tt-quick-btn" onclick="TeacherTools.openBoard()" data-tip="Whiteboard"><span class="tt-q-ic">📝</span></button>
+      <button class="tt-quick-btn" onclick="TeacherTools.openFlashcards()" data-tip="Flashcards"><span class="tt-q-ic">🃏</span></button>
+    </div>
+    <div class="tt-timer-block">
+      <div class="tt-timer-display" id="ttTimerDisplay">00:00</div>
+      <div class="tt-timer-row">
+        <button class="tt-time-btn" onclick="TeacherTools.startTimer(60)">1m</button>
+        <button class="tt-time-btn" onclick="TeacherTools.startTimer(180)">3m</button>
+        <button class="tt-time-btn" onclick="TeacherTools.startTimer(300)">5m</button>
+        <button class="tt-time-btn tt-stop" onclick="TeacherTools.stopTimer()" aria-label="Stop">⏹</button>
+      </div>
+    </div>
+    <button class="tt-wide-btn" onclick="TeacherTools.randomStudent()">
+      <span class="tt-w-ic">🎯</span>
+      <span class="tt-w-lbl">Random Student<small></small></span>
+    </button>
+  </div>
+</div>
+
+<!-- ===== FLASHCARDS MODAL ===== -->
+<div id="flashcardsModal" class="tt-modal" onclick="if(event.target===this)TeacherTools.closeFlashcards()">
+  <div class="tt-modal-card flashcards-card">
+    <div class="fc-progress"><span id="fcCurrent">1</span> / <span id="fcTotal">1</span></div>
+    <div class="flashcard" id="flashcardContent" onclick="TeacherTools.flipCard()">
+      <div class="fc-front">
+        <div class="fc-emoji" id="fcEmoji">🏠</div>
+        <div class="fc-en" id="fcEn"></div>
+        <div class="fc-hint">Tap to translate</div>
+      </div>
+      <div class="fc-back">
+        <div class="fc-zh" id="fcZh"></div>
+        <div class="fc-hint">Tap to go back</div>
+      </div>
+    </div>
+    <div class="fc-controls">
+      <button class="btn btn-ghost" onclick="TeacherTools.prevCard()">← Previous</button>
+      <button class="btn btn-primary" onclick="TeacherTools.speakCard()">🔊 Listen</button>
+      <button class="btn btn-ghost" onclick="TeacherTools.nextCard()">Next →</button>
+    </div>
+    <button class="tt-modal-close" onclick="TeacherTools.closeFlashcards()">✕</button>
+  </div>
+</div>
+
+<!-- ===== WHITEBOARD MODAL ===== -->
+<div id="boardModal" class="tt-modal" onclick="if(event.target===this)TeacherTools.closeBoard()">
+  <div class="tt-modal-card board-card" id="boardCardEl">
+    <div class="board-toolbar">
+      <button class="board-tool" onclick="TeacherTools.boardSetColor('#1a1a2e')" style="background:#1a1a2e" aria-label="Black"></button>
+      <button class="board-tool" onclick="TeacherTools.boardSetColor('#ef4444')" style="background:#ef4444" aria-label="Red"></button>
+      <button class="board-tool" onclick="TeacherTools.boardSetColor('#10b981')" style="background:#10b981" aria-label="Green"></button>
+      <button class="board-tool" onclick="TeacherTools.boardSetColor('#667eea')" style="background:#667eea" aria-label="Blue"></button>
+      <input type="range" id="boardSize" min="2" max="20" value="4" oninput="TeacherTools.boardSize=this.value">
+      <button class="btn btn-ghost" onclick="TeacherTools.boardClear()">🗑️ Clear</button>
+    </div>
+    <canvas id="boardCanvas" class="board-canvas"></canvas>
+    <button class="board-fullscreen-btn" id="boardFsBtn" onclick="TeacherTools.toggleBoardFullscreen()" aria-label="Fullscreen" title="Fullscreen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9V3h6"/><path d="M21 9V3h-6"/><path d="M3 15v6h6"/><path d="M21 15v6h-6"/></svg>
+    </button>
+    <button class="tt-modal-close" onclick="TeacherTools.closeBoard()">✕</button>
+  </div>
+</div>
+
+<!-- ===== RANDOM STUDENT MODAL ===== -->
+<div id="randomStudentModal" class="tt-modal" onclick="if(event.target===this)this.classList.remove('show')">
+  <div class="tt-modal-card rs-card">
+    <div class="rs-emoji">🎯</div>
+    <div class="rs-label">Selected Student · 选中的学生</div>
+    <div class="rs-number" id="rsNumber">?</div>
+    <button class="btn btn-primary" onclick="TeacherTools.spinRandom()">🎲 Pick Again</button>
+    <button class="tt-modal-close" onclick="document.getElementById('randomStudentModal').classList.remove('show')">✕</button>
+  </div>
+</div>
+
+<!-- ===== SPEAK TIP MODAL ===== -->
+<div id="speakTipModal" class="tt-modal" onclick="if(event.target===this)closeSpeakTip()">
+  <div class="tt-modal-card" style="max-width:420px;text-align:center;padding:40px 30px">
+    <div class="tt-modal-en" style="font-size:28px;font-weight:700;margin-bottom:20px;color:var(--text)"></div>
+    <div class="tt-modal-zh" style="font-size:20px;color:var(--text-soft)"></div>
+    <button class="tt-modal-close" onclick="closeSpeakTip()" style="margin-top:30px">✕</button>
+  </div>
+</div>
+
+<!-- ===== WATERMARK ===== -->
+<div class="sig-watermark" aria-hidden="true"></div>
+<footer class="project-signature" id="sigFooter"></footer>
+
+<!-- Load order: base → registry → viewer → exercise modules -->
+<script src="exercises/base.js"></script>
+<script src="exercises/registry.js"></script>
+<script>
+// Minimal bootstrap - load viewer.js then init
+const SCRIPT_SRC = (() => {
+  const s = document.currentScript;
+  const base = s ? s.src.split('/').slice(0,-1).join('/') : '';
+  return base + '/viewer.js?v=' + Date.now();
+})();
+
+const LOAD_TIMEOUT = 15000;
+let loaded = false;
+
+function onLoadError() {
+  if (loaded) return;
+  document.getElementById('splashScreen').style.display = 'none';
+  document.getElementById('errorMessage').textContent = 'Failed to load lesson engine. Check your connection.';
+  document.getElementById('errorArea').style.display = 'block';
+}
+
+const timer = setTimeout(onLoadError, LOAD_TIMEOUT);
+const script = document.createElement('script');
+script.src = SCRIPT_SRC;
+script.onload = () => {
+  clearTimeout(timer);
+  loaded = true;
+  // Load exercise modules after viewer exports Exercises
+  ['mcq', 'true-false', 'fill-blanks'].forEach(name => {
+    const s = document.createElement('script');
+    s.src = 'exercises/' + name + '.js';
+    document.head.appendChild(s);
+  });
+  // Re-wrap checkFill with SmartFeedback after modules load
+  setTimeout(function() {
+    if (typeof Exercises !== 'undefined' && typeof Exercises.checkFill === 'function') {
+      var orig = Exercises.checkFill;
+      Exercises.checkFill = function(btn) {
+        var ex = btn.closest('.exercise');
+        var inputs = ex ? ex.querySelectorAll('.fill-input[data-answer]') : [];
+        var hint = null;
+        inputs.forEach(function(input) {
+          var expected = input.dataset.answer.trim();
+          var got = input.value.trim();
+          var strip = function(s) { return s.replace(/[\u064B-\u0652\u0670]/g, '').trim(); };
+          if (got && strip(got) !== strip(expected)) {
+            var found = typeof SmartFeedback !== 'undefined' ? SmartFeedback.analyze(got, expected) : null;
+            if (found && !hint) hint = found;
+          }
+        });
+        orig.call(Exercises, btn);
+        if (hint && typeof SmartFeedback !== 'undefined') SmartFeedback.showHint(ex, hint);
+        else if (typeof SmartFeedback !== 'undefined') SmartFeedback.hideHint(ex);
+      };
+    }
+  }, 100);
+};
+script.onerror = onLoadError;
+document.head.appendChild(script);
+</script>
+
+</body>
+</html>
