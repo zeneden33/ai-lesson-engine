@@ -1,0 +1,64 @@
+name = "ai-lesson-engine"
+main = "src/index.js"
+compatibility_date = "2026-05-01"
+
+# =============================================================
+# ENVIRONMENT VARIABLES
+# =============================================================
+[vars]
+# Provider
+AI_PROVIDER = "qwen"
+AI_FALLBACK_PROVIDER = ""
+# AI_TIMEOUT_MS: 180s for Qwen (slow text model). Gemini typically needs only 60-90s.
+AI_TIMEOUT_MS = "180000"
+# AI_API_RETRIES: 0 because orchestrator-level retry (MAX_RETRIES=2) already handles failures.
+# Provider-level retry doubles latency per attempt with no benefit for timeout errors.
+AI_API_RETRIES = "0"
+
+# Models per provider
+GEMINI_MODEL = "gemini-2.0-flash"
+GROQ_MODEL = "mixtral-8x7b-32768"
+QWEN_MODEL = "qwen-max"
+QWEN_VL_MODEL = "qwen-vl-max"
+
+# Image generation
+MAX_IMAGE_SIZE_MB = "5"
+ALLOWED_IMAGE_TYPES = "image/jpeg,image/png,image/webp"
+IMAGE_TIMEOUT_MS = "150000"
+
+# Core
+ENVIRONMENT = "production"
+MAX_RETRIES = "2"
+VERSION = "1.0.0"
+MAX_TOPIC_LENGTH = "500"
+GENERATIONS_PER_HOUR = "5"
+
+# Debug
+DEBUG_MODE = "false"
+DEBUG_MAX_LOG_SIZE = "100"
+
+# =============================================================
+# DEVELOPMENT OVERRIDES
+# =============================================================
+[env.dev]
+vars = { ENVIRONMENT = "development", DEBUG_MODE = "true", AI_PROVIDER = "qwen", AI_TIMEOUT_MS = "180000", AI_API_RETRIES = "0", GEMINI_MODEL = "gemini-2.0-flash", GROQ_MODEL = "mixtral-8x7b-32768", QWEN_MODEL = "qwen-max", QWEN_VL_MODEL = "qwen-vl-max", MAX_IMAGE_SIZE_MB = "5", ALLOWED_IMAGE_TYPES = "image/jpeg,image/png,image/webp", IMAGE_TIMEOUT_MS = "150000", MAX_RETRIES = "2", VERSION = "1.0.0", MAX_TOPIC_LENGTH = "500", GENERATIONS_PER_HOUR = "5", DEBUG_MAX_LOG_SIZE = "100" }
+
+# =============================================================
+# SECRETS (set via `npx wrangler secret put <NAME>`)
+# =============================================================
+# Required (at least one):
+# - GEMINI_API_KEY
+# - GROQ_API_KEY
+# - QWEN_API_KEY
+#
+# Phase 2+:
+# - SESSION_SECRET
+# - STRIPE_SECRET_KEY
+
+# =============================================================
+# D1 DATABASE (Phase 2+)
+# =============================================================
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "ai-lesson-engine-db"
+# database_id = ""

@@ -1,0 +1,121 @@
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mProcessing wrangler.toml configuration:[0m
+
+  
+    - "env.dev" environment configuration
+      - "vars.AI_FALLBACK_PROVIDER" exists at the top level, but not on "env.dev.vars".
+        This is not what you probably want, since "vars" configuration is not inherited by environments.
+        Please add "vars.AI_FALLBACK_PROVIDER" to "env.dev".
+      - "vars.AI_TIMEOUT_MS" exists at the top level, but not on "env.dev.vars".
+        This is not what you probably want, since "vars" configuration is not inherited by environments.
+        Please add "vars.AI_TIMEOUT_MS" to "env.dev".
+      - "vars.AI_API_RETRIES" exists at the top level, but not on "env.dev.vars".
+        This is not what you probably want, since "vars" configuration is not inherited by environments.
+        Please add "vars.AI_API_RETRIES" to "env.dev".
+      - "vars.GEMINI_MODEL" exists at the top level, but not on "env.dev.vars".
+        This is not what you probably want, since "vars" configuration is not inherited by environments.
+        Please add "vars.GEMINI_MODEL" to "env.dev".
+      - "vars.GROQ_MODEL" exists at the top level, but not on "env.dev.vars".
+        This is not what you probably want, since "vars" configuration is not inherited by environments.
+        Please add "vars.GROQ_MODEL" to "env.dev".
+      - "vars.QWEN_MODEL" exists at the top level, but not on "env.dev.vars".
+        This is not what you probably want, since "vars" configuration is not inherited by environments.
+        Please add "vars.QWEN_MODEL" to "env.dev".
+      - "vars.MAX_RETRIES" exists at the top level, but not on "env.dev.vars".
+        This is not what you probably want, since "vars" configuration is not inherited by environments.
+        Please add "vars.MAX_RETRIES" to "env.dev".
+      - "vars.VERSION" exists at the top level, but not on "env.dev.vars".
+        This is not what you probably want, since "vars" configuration is not inherited by environments.
+        Please add "vars.VERSION" to "env.dev".
+      - "vars.MAX_TOPIC_LENGTH" exists at the top level, but not on "env.dev.vars".
+        This is not what you probably want, since "vars" configuration is not inherited by environments.
+        Please add "vars.MAX_TOPIC_LENGTH" to "env.dev".
+      - "vars.GENERATIONS_PER_HOUR" exists at the top level, but not on "env.dev.vars".
+        This is not what you probably want, since "vars" configuration is not inherited by environments.
+        Please add "vars.GENERATIONS_PER_HOUR" to "env.dev".
+      - "vars.DEBUG_MAX_LOG_SIZE" exists at the top level, but not on "env.dev.vars".
+        This is not what you probably want, since "vars" configuration is not inherited by environments.
+        Please add "vars.DEBUG_MAX_LOG_SIZE" to "env.dev".
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mProcessing wrangler.toml configuration:[0m
+
+  
+    - "env.dev" environment configuration
+      - "vars.AI_FALLBACK_PROVIDER" exists at the top level, but not on "env.dev.vars".
+        This is not what you probably want, since "vars" configuration is not inherited by environments.
+        Please add "vars.AI_FALLBACK_PROVIDER" to "env.dev".
+      - "vars.AI_TIMEOUT_MS" exists at the top level, but not on "env.dev.vars".
+        This is not what you probably want, since "vars" configuration is not inherited by environments.
+        Please add "vars.AI_TIMEOUT_MS" to "env.dev".
+      - "vars.AI_API_RETRIES" exists at the top level, but not on "env.dev.vars".
+        This is not what you probably want, since "vars" configuration is not inherited by environments.
+        Please add "vars.AI_API_RETRIES" to "env.dev".
+      - "vars.GEMINI_MODEL" exists at the top level, but not on "env.dev.vars".
+        This is not what you probably want, since "vars" configuration is not inherited by environments.
+        Please add "vars.GEMINI_MODEL" to "env.dev".
+      - "vars.GROQ_MODEL" exists at the top level, but not on "env.dev.vars".
+        This is not what you probably want, since "vars" configuration is not inherited by environments.
+        Please add "vars.GROQ_MODEL" to "env.dev".
+      - "vars.QWEN_MODEL" exists at the top level, but not on "env.dev.vars".
+        This is not what you probably want, since "vars" configuration is not inherited by environments.
+        Please add "vars.QWEN_MODEL" to "env.dev".
+      - "vars.MAX_RETRIES" exists at the top level, but not on "env.dev.vars".
+        This is not what you probably want, since "vars" configuration is not inherited by environments.
+        Please add "vars.MAX_RETRIES" to "env.dev".
+      - "vars.VERSION" exists at the top level, but not on "env.dev.vars".
+        This is not what you probably want, since "vars" configuration is not inherited by environments.
+        Please add "vars.VERSION" to "env.dev".
+      - "vars.MAX_TOPIC_LENGTH" exists at the top level, but not on "env.dev.vars".
+        This is not what you probably want, since "vars" configuration is not inherited by environments.
+        Please add "vars.MAX_TOPIC_LENGTH" to "env.dev".
+      - "vars.GENERATIONS_PER_HOUR" exists at the top level, but not on "env.dev.vars".
+        This is not what you probably want, since "vars" configuration is not inherited by environments.
+        Please add "vars.GENERATIONS_PER_HOUR" to "env.dev".
+      - "vars.DEBUG_MAX_LOG_SIZE" exists at the top level, but not on "env.dev.vars".
+        This is not what you probably want, since "vars" configuration is not inherited by environments.
+        Please add "vars.DEBUG_MAX_LOG_SIZE" to "env.dev".
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mProcessing wrangler.toml configuration:[0m
+
+  
+    - "env.dev" environment configuration
+      - "vars.AI_FALLBACK_PROVIDER" exists at the top level, but not on "env.dev.vars".
+        This is not what you probably want, since "vars" configuration is not inherited by environments.
+        Please add "vars.AI_FALLBACK_PROVIDER" to "env.dev".
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mProcessing wrangler.toml configuration:[0m
+
+  
+    - "env.dev" environment configuration
+      - "vars.AI_FALLBACK_PROVIDER" exists at the top level, but not on "env.dev.vars".
+        This is not what you probably want, since "vars" configuration is not inherited by environments.
+        Please add "vars.AI_FALLBACK_PROVIDER" to "env.dev".
+      - "vars.QWEN_VL_MODEL" exists at the top level, but not on "env.dev.vars".
+        This is not what you probably want, since "vars" configuration is not inherited by environments.
+        Please add "vars.QWEN_VL_MODEL" to "env.dev".
+      - "vars.MAX_IMAGE_SIZE_MB" exists at the top level, but not on "env.dev.vars".
+        This is not what you probably want, since "vars" configuration is not inherited by environments.
+        Please add "vars.MAX_IMAGE_SIZE_MB" to "env.dev".
+      - "vars.ALLOWED_IMAGE_TYPES" exists at the top level, but not on "env.dev.vars".
+        This is not what you probably want, since "vars" configuration is not inherited by environments.
+        Please add "vars.ALLOWED_IMAGE_TYPES" to "env.dev".
+      - "vars.IMAGE_TIMEOUT_MS" exists at the top level, but not on "env.dev.vars".
+        This is not what you probably want, since "vars" configuration is not inherited by environments.
+        Please add "vars.IMAGE_TIMEOUT_MS" to "env.dev".
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mProcessing wrangler.toml configuration:[0m
+
+  
+    - "env.dev" environment configuration
+      - "vars.AI_FALLBACK_PROVIDER" exists at the top level, but not on "env.dev.vars".
+        This is not what you probably want, since "vars" configuration is not inherited by environments.
+        Please add "vars.AI_FALLBACK_PROVIDER" to "env.dev".
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mThe Workers runtime failed to start. There is likely additional logging output above.[0m
+
+
+🪵  Logs were written to "C:\Users\AE\AppData\Roaming\xdg.config\.wrangler\logs\wrangler-2026-05-14_12-38-20_016.log"

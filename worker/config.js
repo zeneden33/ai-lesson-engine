@@ -1,0 +1,79 @@
+// ================================================================
+// *** CONFIG — Unified configuration with provider support ***
+// ================================================================
+
+export const DEFAULTS = {
+  AI_PROVIDER: 'freellm',
+  AI_FALLBACK_PROVIDER: '',
+  AI_TIMEOUT_MS: 60000,
+  AI_API_RETRIES: 1,
+
+  FREELLM_MODEL: 'gpt-4o-mini',
+  FREELLM_API_BASE: 'https://api.freellmapi.com/v1',
+
+  GEMINI_MODEL: 'gemini-2.0-flash',
+  GROQ_MODEL: 'mixtral-8x7b-32768',
+  QWEN_MODEL: 'qwen-max',
+  QWEN_VL_MODEL: 'qwen-vl-max',
+
+  MAX_IMAGE_SIZE_MB: 5,
+  ALLOWED_IMAGE_TYPES: 'image/jpeg,image/png,image/webp',
+  IMAGE_TIMEOUT_MS: 150000,
+
+  ENVIRONMENT: 'development',
+  MAX_RETRIES: 2,
+  VERSION: '1.0.0',
+  MAX_TOPIC_LENGTH: 500,
+  MIN_TOPIC_LENGTH: 3,
+  GENERATIONS_PER_HOUR: 5,
+  VALIDATIONS_PER_HOUR: 20,
+  LESSON_RETRIEVALS_PER_HOUR: 100,
+  GENERATE_TOTAL_TIMEOUT_MS: 300000,
+  RESPONSE_MAX_BYTES: 512000,
+  RATE_LIMIT_CLEANUP_MS: 300000,
+  DEBUG_MODE: false,
+  DEBUG_MAX_LOG_SIZE: 100
+};
+
+export function loadConfig(env) {
+  const isDev = (env.ENVIRONMENT || DEFAULTS.ENVIRONMENT) === 'development';
+
+  return {
+    // Provider selection
+    AI_PROVIDER: env.AI_PROVIDER || DEFAULTS.AI_PROVIDER,
+    AI_FALLBACK_PROVIDER: env.AI_FALLBACK_PROVIDER || DEFAULTS.AI_FALLBACK_PROVIDER,
+    AI_TIMEOUT_MS: parseInt(env.AI_TIMEOUT_MS || DEFAULTS.AI_TIMEOUT_MS, 10),
+    AI_API_RETRIES: parseInt(env.AI_API_RETRIES || DEFAULTS.AI_API_RETRIES, 10),
+
+    // API Keys (secrets, set via wrangler secret)
+    FREELLM_API_KEY: env.FREELLM_API_KEY || 'freellmapi-8877a76f42b6aa1759e30cfc85409d52f6efa1b9ff490415',
+    GEMINI_API_KEY: env.GEMINI_API_KEY,
+    GROQ_API_KEY: env.GROQ_API_KEY,
+    QWEN_API_KEY: env.QWEN_API_KEY,
+
+    // Models per provider
+    FREELLM_MODEL: env.FREELLM_MODEL || DEFAULTS.FREELLM_MODEL,
+    FREELLM_API_BASE: env.FREELLM_API_BASE || DEFAULTS.FREELLM_API_BASE,
+    GEMINI_MODEL: env.GEMINI_MODEL || DEFAULTS.GEMINI_MODEL,
+    GROQ_MODEL: env.GROQ_MODEL || DEFAULTS.GROQ_MODEL,
+    QWEN_MODEL: env.QWEN_MODEL || DEFAULTS.QWEN_MODEL,
+    QWEN_VL_MODEL: env.QWEN_VL_MODEL || DEFAULTS.QWEN_VL_MODEL,
+
+    // Image generation
+    MAX_IMAGE_SIZE_MB: parseInt(env.MAX_IMAGE_SIZE_MB || DEFAULTS.MAX_IMAGE_SIZE_MB, 10),
+    ALLOWED_IMAGE_TYPES: env.ALLOWED_IMAGE_TYPES || DEFAULTS.ALLOWED_IMAGE_TYPES,
+    IMAGE_TIMEOUT_MS: parseInt(env.IMAGE_TIMEOUT_MS || DEFAULTS.IMAGE_TIMEOUT_MS, 10),
+
+    // Core
+    ENVIRONMENT: env.ENVIRONMENT || DEFAULTS.ENVIRONMENT,
+    MAX_RETRIES: parseInt(env.MAX_RETRIES || DEFAULTS.MAX_RETRIES, 10),
+    VERSION: env.VERSION || DEFAULTS.VERSION,
+    MAX_TOPIC_LENGTH: parseInt(env.MAX_TOPIC_LENGTH || DEFAULTS.MAX_TOPIC_LENGTH, 10),
+    GENERATIONS_PER_HOUR: parseInt(env.GENERATIONS_PER_HOUR || DEFAULTS.GENERATIONS_PER_HOUR, 10),
+    GENERATE_TOTAL_TIMEOUT_MS: parseInt(env.GENERATE_TOTAL_TIMEOUT_MS || DEFAULTS.GENERATE_TOTAL_TIMEOUT_MS, 10),
+
+    // Debug
+    DEBUG_MODE: env.DEBUG_MODE === 'true' || (env.DEBUG_MODE !== 'false' && isDev),
+    DEBUG_MAX_LOG_SIZE: parseInt(env.DEBUG_MAX_LOG_SIZE || DEFAULTS.DEBUG_MAX_LOG_SIZE, 10)
+  };
+}

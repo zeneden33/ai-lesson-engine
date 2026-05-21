@@ -1,0 +1,266 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Lesson Data",
+  "type": "object",
+  "required": [
+    "meta", "hook", "thinking", "vocab", "dialogue",
+    "dialogueScenes", "explain", "grammarMeta", "grammar",
+    "exercisesMeta", "exercises", "smartFeedback"
+  ],
+  "version": "1.0.0",
+  "versionHistory": {
+    "1.0.0": { "date": "2026-05-13", "changes": "Initial stable schema" }
+  },
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["pageTitle", "brandTitle", "brandIcon"],
+      "properties": {
+        "pageTitle": { "type": "string", "pattern": "\\|" },
+        "brandTitle": { "type": "string", "minLength": 1 },
+        "brandIcon": { "type": "string", "minLength": 1 }
+      }
+    },
+    "hook": {
+      "type": "object",
+      "required": ["emojis", "title_en", "title_zh", "tagline", "compare"],
+      "properties": {
+        "emojis": { "type": "string" },
+        "title_en": { "type": "string" },
+        "title_zh": { "type": "string" },
+        "tagline": { "type": "string" },
+        "compare": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "object",
+            "required": ["emoji", "en", "zh", "type"],
+            "properties": {
+              "emoji": { "type": "string" },
+              "en": { "type": "string" },
+              "zh": { "type": "string" },
+              "type": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "thinking": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["en", "zh", "emoji"],
+        "properties": {
+          "en": { "type": "string" },
+          "zh": { "type": "string" },
+          "emoji": { "type": "string" }
+        }
+      }
+    },
+    "vocab": {
+      "type": "array",
+      "minItems": 15,
+      "maxItems": 35,
+      "items": {
+        "type": "object",
+        "required": ["en", "zh", "emoji", "type"],
+        "properties": {
+          "en": { "type": "string" },
+          "zh": { "type": "string" },
+          "emoji": { "type": "string" },
+          "type": { "type": "string", "enum": [
+            "Noun · 名词", "Plural Noun · 名词复数", "Verb · 动词",
+            "Gerund · 动名词", "Adjective · 形容词", "Adverb · 副词",
+            "Preposition · 介词", "Pronoun · 代词", "Number · 数词",
+            "Question word · 疑问词", "Expression · 表达语", "Greeting · 问候语"
+          ]}
+        }
+      }
+    },
+    "dialogue": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "required": ["speaker", "role", "en", "zh"],
+        "properties": {
+          "speaker": { "type": "string" },
+          "role": { "type": "string" },
+          "en": { "type": "string" },
+          "zh": { "type": "string" }
+        }
+      }
+    },
+    "dialogueScenes": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["emoji", "label_en", "label_zh", "gradient"],
+        "properties": {
+          "emoji": { "type": "string" },
+          "label_en": { "type": "string" },
+          "label_zh": { "type": "string" },
+          "gradient": { "type": "string", "pattern": "^linear-gradient\\(.*\\)$" }
+        }
+      }
+    },
+    "explain": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "required": ["label", "en", "zh", "note"],
+        "properties": {
+          "label": { "type": "string" },
+          "en": { "type": "string" },
+          "zh": { "type": "string" },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "grammarMeta": {
+      "type": "object",
+      "required": ["title", "subtitle"],
+      "properties": {
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" }
+      }
+    },
+    "grammar": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["type", "title"],
+        "oneOf": [
+          {
+            "properties": {
+              "type": { "enum": ["pattern"] },
+              "en": { "type": "string" },
+              "zh": { "type": "string" }
+            },
+            "required": ["en", "zh"]
+          },
+          {
+            "properties": {
+              "type": { "enum": ["conjugation"] },
+              "items": {
+                "type": "array",
+                "minItems": 6,
+                "items": {
+                  "type": "object",
+                  "required": ["pronoun", "verb", "zh"]
+                }
+              }
+            },
+            "required": ["items"]
+          }
+        ]
+      }
+    },
+    "exercisesMeta": {
+      "type": "object",
+      "required": ["title"],
+      "properties": {
+        "title": { "type": "string" }
+      }
+    },
+    "exercises": {
+      "type": "object",
+      "required": [
+        "mcq", "trueFalse", "fillBlanks", "dragWords", "dragZones",
+        "orderWords", "orderTarget", "correctError", "rewrite",
+        "guidedWriting", "listeningExercise", "speedChallenge",
+        "multiStep", "paragraph", "contextAnalysis", "scenario",
+        "visualChoice", "sentenceTransform", "challenge",
+        "selectWords", "dialogueFill", "patternFill"
+      ],
+      "properties": {
+        "mcq": {
+          "type": "array", "minItems": 3, "maxItems": 3,
+          "items": {
+            "type": "object",
+            "required": ["question", "options", "correct"],
+            "properties": {
+              "question": { "type": "string" },
+              "options": { "type": "array", "minItems": 4, "maxItems": 4, "items": { "type": "string" } },
+              "correct": { "type": "integer", "minimum": 0, "maximum": 3 }
+            }
+          }
+        },
+        "trueFalse": {
+          "type": "array", "minItems": 4, "maxItems": 6,
+          "items": {
+            "type": "object",
+            "required": ["en", "zh", "correct"],
+            "properties": {
+              "en": { "type": "string" },
+              "zh": { "type": "string" },
+              "correct": { "type": "boolean" }
+            }
+          }
+        },
+        "fillBlanks": {
+          "type": "array", "minItems": 3, "maxItems": 3,
+          "items": {
+            "type": "object",
+            "required": ["sentence", "answer"],
+            "properties": {
+              "sentence": { "type": "string" },
+              "answer": { "type": "string" }
+            }
+          }
+        },
+        "dragWords": {
+          "type": "array", "minItems": 4, "maxItems": 8,
+          "items": {
+            "type": "object",
+            "required": ["en", "cat"],
+            "properties": {
+              "en": { "type": "string" },
+              "cat": { "type": "string" }
+            }
+          }
+        },
+        "dragZones": {
+          "type": "array", "minItems": 2, "maxItems": 2,
+          "items": {
+            "type": "object",
+            "required": ["accept", "emoji", "en", "zh"],
+            "properties": {
+              "accept": { "type": "string" },
+              "emoji": { "type": "string" },
+              "en": { "type": "string" },
+              "zh": { "type": "string" }
+            }
+          }
+        },
+        "orderWords": { "type": "array", "minItems": 3 }
+      }
+    },
+    "smartFeedback": {
+      "type": "object",
+      "minProperties": 3,
+      "maxProperties": 5,
+      "patternProperties": {
+        "^[a-z0-9_-]+$": {
+          "type": "object",
+          "required": ["context", "correct", "en", "zh"],
+          "properties": {
+            "context": { "type": "string" },
+            "correct": { "type": "string" },
+            "en": { "type": "string", "pattern": "^💡" },
+            "zh": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}
